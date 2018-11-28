@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">prac2</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (opcional)</string>
+    <string name="action_sign_in">Entrar o registrarse</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">La direccion de email es incorrecta</string>
+    <string name="error_invalid_password">El password es demasiado corto</string>
+    <string name="error_incorrect_password">El password es incorrecto</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+    <string name="permission_rationale">"Permisos de acceso a Contactos son necesarios para ayudar
+        con el autocompletado de direcciones email."
+    </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Abrir menu lateral</string>
+    <string name="navigation_drawer_close">Cerrar menu lateral</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Cabecera de navegacion</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="option_1">Todas las bicicletas</string>
+    <string name="option_2">Añadir bicicleta</string>
+    <string name="option_3">Opcion 3</string>
+    <string name="option_4">Opcion 4</string>
+</resources>
