@@ -3,10 +3,15 @@ package com.example.roca486.prac2;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -26,6 +31,9 @@ public class AddBikeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private EditText mBikeIdView;
+    private EditText mBikeDescriptionView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,14 +71,53 @@ public class AddBikeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_bike, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_add_bike, container, false);
+
+        Button add_bike = view.findViewById(R.id.add_bike);
+        mBikeIdView = view.findViewById(R.id.bike_id);
+        mBikeDescriptionView = view.findViewById(R.id.bike_description);
+
+        add_bike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddBikeButtonPressed();
+            }
+        });
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void onAddBikeButtonPressed() {
+        mBikeIdView.setError(null);
+        mBikeDescriptionView.setError(null);
+
+        String bikeId = mBikeIdView.getText().toString();
+        String bikeDescription = mBikeDescriptionView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+        Bike bike;
+
+        if (TextUtils.isEmpty(bikeDescription)) {
+            mBikeDescriptionView.setError("This field cannot be empty");
+            focusView = mBikeDescriptionView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(bikeId)) {
+            mBikeIdView.setError("This field cannot be empty");
+            focusView = mBikeIdView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            bike = new Bike(bikeId, bikeDescription);
+            if (mListener != null) {
+                mListener.onFragmentInteraction(bike);
+            }
         }
     }
 
@@ -103,6 +150,6 @@ public class AddBikeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        boolean onFragmentInteraction(Bike bike);
     }
 }
