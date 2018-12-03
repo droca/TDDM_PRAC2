@@ -27,4 +27,8 @@
     <string name="add_bike_add_bike_button">Add bike</string>
     <string name="add_bike_id">Identifier</string>
     <string name="add_bike_description">Description</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
