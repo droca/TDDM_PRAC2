@@ -1,5 +1,6 @@
 package com.example.roca486.prac2;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +16,9 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         BikeSharingListFragment.OnListFragmentInteractionListener,
-        AddBikeFragment.OnFragmentInteractionListener {
+        AddBikeFragment.OnFragmentInteractionListener,
+        MapsFragment.OnFragmentInteractionListener
+         {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.option_2) {
             fragment = new AddBikeFragment();
         } else if (id == R.id.option_3) {
-
+            fragment = new MapsFragment();
         } else if (id == R.id.option_4) {
 
         }
@@ -110,4 +113,10 @@ public class MainActivity extends AppCompatActivity implements
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onMapsFragmentInteraction(Uri uri){
+    }
+
+
 }
