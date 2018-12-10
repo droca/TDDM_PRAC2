@@ -1,12 +1,15 @@
 package com.example.roca486.prac2;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.roca486.prac2.CitiesFragment.OnListFragmentInteractionListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,6 +40,9 @@ public class MyCityRecyclerViewAdapter extends RecyclerView.Adapter<MyCityRecycl
         holder.mItem = mValues.get(position);
         holder.mIneView.setText(mValues.get(position).getIne());
         holder.mNameView.setText(mValues.get(position).getMunicipiNomCurt());
+        Picasso.get().load(holder.mItem.getMunicipiEscut())
+                .resize(90,90)
+                .centerCrop().into(holder.mLogoView);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +65,7 @@ public class MyCityRecyclerViewAdapter extends RecyclerView.Adapter<MyCityRecycl
         public final View mView;
         public final TextView mIneView;
         public final TextView mNameView;
+        public final ImageView mLogoView;
         public Element mItem;
 
         public ViewHolder(View view) {
@@ -66,6 +73,7 @@ public class MyCityRecyclerViewAdapter extends RecyclerView.Adapter<MyCityRecycl
             mView = view;
             mIneView = (TextView) view.findViewById(R.id.element_ine);
             mNameView = (TextView) view.findViewById(R.id.element_name);
+            mLogoView = (ImageView) view.findViewById(R.id.element_image);
         }
 
         @Override

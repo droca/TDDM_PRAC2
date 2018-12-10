@@ -26,6 +26,8 @@
 
     <string name="title_activity_maps">Mapa</string>
 
+    <string name="city_image_description">Imagen de municipio</string>
+
     <string name="add_bike_add_bike_button">Añadir bicicleta</string>
     <string name="add_bike_id">Identificador</string>
     <string name="add_bike_description">Descripción</string>
