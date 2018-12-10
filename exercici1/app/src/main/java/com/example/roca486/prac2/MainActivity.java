@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener,
         BikeSharingListFragment.OnListFragmentInteractionListener,
         AddBikeFragment.OnFragmentInteractionListener,
-        MapsFragment.OnFragmentInteractionListener
+        MapsFragment.OnFragmentInteractionListener,
+        CitiesFragment.OnListFragmentInteractionListener
          {
 
     @Override
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.option_3) {
             fragment = new MapsFragment();
         } else if (id == R.id.option_4) {
-
+            fragment = new CitiesFragment();
         }
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -119,4 +120,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @Override
+         public void onListFragmentInteraction(Element element) {
+    }
 }

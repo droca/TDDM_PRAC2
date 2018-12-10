@@ -22,7 +22,9 @@
     <string name="option_1">Todas las bicicletas</string>
     <string name="option_2">Añadir bicicleta</string>
     <string name="option_3">Mapas</string>
-    <string name="option_4">Opción 4</string>
+    <string name="option_4">Municipios</string>
+
+    <string name="title_activity_maps">Mapa</string>
 
     <string name="add_bike_add_bike_button">Añadir bicicleta</string>
     <string name="add_bike_id">Identificador</string>
