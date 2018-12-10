@@ -1,11 +1,16 @@
 package com.example.roca486.prac2;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +22,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -40,6 +49,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
 
     private OnFragmentInteractionListener mListener;
+    private View mProgressView;
+    private View mView;
 
     public MapsFragment() {
         // Required empty public constructor
@@ -78,11 +89,81 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+        mView = inflater.inflate(R.layout.fragment_maps, container, false);
+        this.mProgressView = getActivity().findViewById(R.id.cities_progress);
         FragmentManager fm = getChildFragmentManager();
         SupportMapFragment mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.theMap);
         mapFragment.getMapAsync(this);
-        return view;
+
+        getCities();
+
+        return mView;
+    }
+
+
+    private void getCities() {
+        DibaAPI dibaAPI = RetrofitFactory.getDibaAPI();
+        showProgress(true);
+        Call<Cities> callCitiesList = dibaAPI.cities("1", "11");
+        callCitiesList.enqueue(new Callback<Cities>() {
+            @Override
+            public void onResponse(Call<Cities> call, Response<Cities> response) {
+                if (response.isSuccessful()) {
+                    Cities cities = response.body();
+
+                    for (Element element: cities.getElements()) {
+                        String localitzacio = element.getGrupAjuntament().getLocalitzacio();
+                        double lat = Double.parseDouble(localitzacio.split(",")[0]);
+                        double lng = Double.parseDouble(localitzacio.split(",")[1]);
+                        LatLng latLng = new LatLng(lat, lng);
+                        MarkerOptions option = new MarkerOptions();
+                        option.position(latLng).title(element.getMunicipiNomCurt());
+                        map.addMarker(option);
+                    }
+                }
+
+                    showProgress(false);
+                }
+
+
+            @Override
+            public void onFailure(Call<Cities> call, Throwable t) {
+                Log.d ("TDDM_TAG", "onFailuera!!!!: msg:"+t.getMessage());
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     public void onMapReady(GoogleMap googleMap) {

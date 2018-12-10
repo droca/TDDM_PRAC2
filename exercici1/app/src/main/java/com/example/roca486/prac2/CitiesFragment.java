@@ -92,7 +92,6 @@ public class CitiesFragment extends Fragment {
         callCitiesList.enqueue(new Callback<Cities>() {
             @Override
             public void onResponse(Call<Cities> call, Response<Cities> response) {
-                int statusCode = response.code();
                 if (response.isSuccessful()) {
                     Cities cities = response.body();
                     RecyclerView recyclerView = (RecyclerView) mCitiesListView;
