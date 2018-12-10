@@ -1,5 +1,6 @@
 package com.example.roca486.prac2;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class AddBikeFragment extends Fragment {
 
     private EditText mBikeIdView;
     private EditText mBikeDescriptionView;
+    private BikeModel bikeModel;
 
     private OnFragmentInteractionListener mListener;
 
@@ -116,9 +118,15 @@ public class AddBikeFragment extends Fragment {
         } else {
             bike = new Bike(bikeId, bikeDescription);
             if (mListener != null) {
+                updateBikes(bike);
                 mListener.onFragmentInteraction(bike);
             }
         }
+    }
+
+    public void updateBikes(Bike bike){
+        bikeModel = ViewModelProviders.of(getActivity()).get(BikeModel.class);
+        bikeModel.bikes.add(bike);
     }
 
     @Override

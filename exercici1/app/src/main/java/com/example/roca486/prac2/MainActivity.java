@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onFragmentInteraction(Bike bike) {
         Fragment fragment = new Fragment();
         fragment = new BikeSharingListFragment();
-        ((BikeSharingListFragment) fragment).updateBikes(bike);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
@@ -121,6 +120,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
     @Override
-         public void onListFragmentInteraction(Element element) {
+    public void onListFragmentInteraction(Element element) {
     }
 }

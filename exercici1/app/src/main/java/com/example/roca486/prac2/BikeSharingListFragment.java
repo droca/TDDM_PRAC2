@@ -1,9 +1,8 @@
 package com.example.roca486.prac2;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -28,15 +24,7 @@ public class BikeSharingListFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
-    private List<Bike> bikes = new ArrayList<Bike>() {{
-        add(new Bike("Bike1", "First bike"));
-        add(new Bike("Bike2", "Second bike"));
-        add(new Bike("Bike3", "Third bike"));
-        add(new Bike("Bike4", "Fourth bike"));
-        add(new Bike("Bike5", "Fifth bike"));
-        add(new Bike("Bike6", "Sixth bike"));
-    }};
+    private BikeModel bikeModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,6 +58,8 @@ public class BikeSharingListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
+        bikeModel = ViewModelProviders.of(getActivity()).get(BikeModel.class);
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -80,19 +70,9 @@ public class BikeSharingListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(bikes, mListener));
-
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(bikeModel.bikes, mListener));
         }
         return view;
-    }
-
-    public void updateBikes(Bike bike){
-        bikes.add(bike);
-        View view = getView();
-        if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) getView();
-            recyclerView.getAdapter().notifyDataSetChanged();
-        }
     }
 
     @Override
