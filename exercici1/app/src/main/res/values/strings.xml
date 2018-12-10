@@ -28,4 +28,5 @@
     <string name="add_bike_id">Identifier</string>
     <string name="add_bike_description">Description</string>
     <string name="title_activity_maps">Map</string>
+    <string name="city_image_description">City image</string>
 </resources>
